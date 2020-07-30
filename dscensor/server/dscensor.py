@@ -7,7 +7,7 @@
 import os
 import logging
 from logging import Formatter
-from logging.handlers import RotatingFileHandler
+from logging import StreamHandler
 from panparser import panparser_prototype
 from client.templating import neo4j_dscensor_linkout
 from flask import Flask, request, session, g, redirect, url_for, abort, \
@@ -22,13 +22,10 @@ app = Flask(__name__, template_folder='client')
 app.config.from_object(__name__)
 app.config.update(dict(
     API_PATH='/api/v1',
-#    HOST = '//0.0.0.0',
-    HOST = '//wright',
-    PORT = 7687,
-    AUTH = 'censor',
-    PSWD = 'CensorMe123'
-#    AUTH = 'neo4j',
-#    PSWD = 'neo4j'
+    HOST = os.environ['HOST'],
+    PORT = os.environ['PORT'],
+    AUTH = os.environ['AUTH'],
+    PSWD = os.environ['PSWD']
 ))
 # server
 app.domain="http://dev.lis.ncgr.org:50020"
@@ -38,11 +35,7 @@ app.main_panset = 'glysp.mixed.pan2.TV81'  # glycine main panset
 
 msg_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 formatter = Formatter(msg_format)
-handler = RotatingFileHandler(
-    LOGFILE,
-    maxBytes=MAXLOGBYTES,
-    backupCount=MAXLOGFILES
-)
+handler = StreamHandler()
 handler.setFormatter(formatter)
 
 if app.debug:
@@ -57,7 +50,7 @@ gunicorn_error.addHandler(handler)
 gunicorn_access.addHandler(handler)
 app.logger.addHandler(handler)
 
-import views
+from views import *
 
 # this exists for gunicorn invocation
 if __name__ == '__main__':

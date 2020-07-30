@@ -18,22 +18,17 @@ from shutil import copyfile
 msg_format = '%(asctime)s|%(name)s|[%(levelname)s]: %(message)s'
 logging.basicConfig(format=msg_format, datefmt='%m-%d %H:%M',
                     level=logging.DEBUG)
-log_handler = logging.FileHandler(
-                       './DSCensor_test.log')
+log_handler = logging.StreamHandler()
 formatter = logging.Formatter(msg_format)
 log_handler.setFormatter(formatter)
 logger = logging.getLogger('DSCensor_test')
 logger.addHandler(log_handler)
 
 def connect_neo4j():
-#    host = '//0.0.0.0'
-#    port = 7687
-#    auth = 'neo4j'
-#    pswd = 'neo4j'
-    host = '//wright'
-    port = 7687
-    auth = 'censor'
-    pswd = 'CensorMe123'
+    host = os.environ['HOST']
+    port = os.environ['PORT']
+    auth = os.environ['AUTH']
+    pswd = os.environ['PSWD']
     bolt = 'bolt:{}:{}'.format(host, port)
     driver = GraphDatabase.driver(bolt, auth=basic_auth(auth, pswd))
     logger.info('connection succeeded, driver:{}'.format(driver))

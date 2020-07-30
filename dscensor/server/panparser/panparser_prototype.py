@@ -2,7 +2,7 @@
 
 import os
 import sys
-
+import gzip
 
 
 def clean_ids(my_id):
@@ -23,9 +23,9 @@ def un_yukify(my_id):
 
 
 def parse_pansets(dataset):
-    '''Parses hsh.tsv file for gene assignment'''
+    '''Parses hsh.tsv.gz file for gene assignment'''
     genes = {}
-    with open(dataset) as fopen:
+    with gzip.open(dataset, mode="rt") as fopen:
         for line in fopen:
             line = line.rstrip()
             if line.startswith('#') or not line:
@@ -45,9 +45,9 @@ def parse_pansets(dataset):
 
 
 def parse_clusters(dataset):
-    '''Parses clust.tsv file for pan set assignment'''
+    '''Parses clust.tsv.gz file for pan set assignment'''
     pansets = {}
-    with open(dataset) as fopen:
+    with gzip.open(dataset, mode="rt") as fopen:
         for line in fopen:
             line = line.rstrip()
             if line.startswith('#') or not line:
@@ -66,8 +66,8 @@ def main():
     dataset_dir = './panparser'
     datasets = {}
     for d in my_datasets:
-        my_hsh = f'{os.path.abspath(dataset_dir)}/{d}.hsh.tsv'
-        my_clust = f'{os.path.abspath(dataset_dir)}/{d}.clust.tsv'
+        my_hsh = f'{os.path.abspath(dataset_dir)}/{d}.hsh.tsv.gz'
+        my_clust = f'{os.path.abspath(dataset_dir)}/{d}.clust.tsv.gz'
         pansets = parse_pansets(my_hsh)  # get pansets from files
         clusters = parse_clusters(my_clust)  # get clusters from files
         datasets[d] = {'pansets': pansets, 'clusters': clusters}

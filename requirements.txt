@@ -20,7 +20,7 @@ Markdown==3.2.1
 MarkupSafe==1.1.1
 matplotlib==3.1.1
 multiqc==1.8
-neo4j-driver==1.5.3
+neo4j-driver==1.7.6
 networkx==2.4
 numpy==1.18.3
 pyparsing==2.4.7

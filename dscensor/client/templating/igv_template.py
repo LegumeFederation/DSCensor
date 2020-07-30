@@ -14,8 +14,7 @@ from jinja2 import Environment, FileSystemLoader
 msg_format = '%(asctime)s|%(name)s|[%(levelname)s]: %(message)s'
 logging.basicConfig(format=msg_format, datefmt='%m-%d %H:%M',
                     level=logging.DEBUG)
-log_handler = logging.FileHandler(
-                       './DSCensor_test.log')
+log_handler = logging.StreamHandler()
 formatter = logging.Formatter(msg_format)
 log_handler.setFormatter(formatter)
 logger = logging.getLogger('DSCensor_test')
