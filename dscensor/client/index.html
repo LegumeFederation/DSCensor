@@ -5,22 +5,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.3.14/crossfilter.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.3.14/crossfilter.min.js"></script>
     <script src="https://d3js.org/d3.v3.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.31/dc.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.31/dc.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<!--    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/colreorder/1.3.2/js/dataTables.colReorder.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>-->
     <script src="https://rawgit.com/legumeinfo/lis-taxon-symbology/master/dist/bundle.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.31/dc.css">
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.31/dc.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.3.2/css/colReorder.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css">
+<!--    <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.3.2/css/colReorder.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css">-->
 </head>
 <style>
+
   #dscensor-main-nav
   {
     padding: 2.0em;
@@ -28,10 +29,14 @@
   #main-nav-jumbo
   {
     /*background-color: rgba(178,223,238,0.9);*/
-    background-color: rgba(255,211,155,0.8);
+    /*background-color: rgba(255,211,155,0.8);*/
+    background-color: rgba(0,0,0,0.65);
     /*background-image: url('https://upload.wikimedia.org/wikipedia/commons/f/f3/Legumes-665788_1280.jpg');*/
     text-align: center;
   }
+#main-nav-jumbo > h1:nth-child(1) > b:nth-child(1){
+  color: white
+}
   #main-nav-navbar
   {
     text-align: center;
@@ -45,13 +50,45 @@
   {
     margin-left: 1.0em
   }
+#type-select{
+  background: lightgray;
+  text-align: center;
+}
+#genus-select{
+  background: lightgray;
+  text-align: center;
+}
+#species-select{
+  background: lightgray;
+  text-align: center;
+}
+.form-group > label {
+  color: white !important;
+}
+ul.nav > li > a > b{
+  color: white;
+}
   #main-nav-subtext
   {
-    color: rgba(087, 087, 087, 1);
+    /*color: rgba(087, 087, 087, 1);*/
+    color: lightgray
   }
-  .dropdown-elements:hover
+  .navbar-nav > li > .dropdown-menu 
   {
-    color: rgba(087, 087, 087, 1);
+    background-color: #222;
+    border-color: #080808;    
+  }
+  .navbar-nav > li > .dropdown-menu a
+  {   
+    color: white;
+  }
+  .dropdown-menu > li > a:hover {
+    background-color: rgba(087, 087, 087, 1);
+    background-image: none;
+  }
+  form, label, p
+  {
+    color: #9d9d9d !important;
   }
 </style>
 <body background="https://upload.wikimedia.org/wikipedia/commons/f/f3/Legumes-665788_1280.jpg">
@@ -61,26 +98,47 @@
             <div class="container">
             <nav class="navbar navbar-inverse" id="main-nav-navbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="#" onclick="alert_placeholder()"><b>Home</b></a></li>
-                    <li><a href="#" onclick="alert_placeholder()"><b>Query Builder</b></a></li>
-                    <li class="dropdown">
+                    <li><a href="/"><b>Home</b></a></li>
+<!--                    <li><a href="#" onclick="alert_placeholder()"><b>Query Builder</b></a></li>-->
+<!--                    <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>Views </b><span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a href="/DSCensor_neo4j_dynamic/genome_main"><b class="dropdown-elements">Assembly</b></a></li>
-                        <li><a href="/DSCensor_neo4j_dynamic/gene_models_main"><b class="dropdown-elements">Annotation</b></a></li>
+                        <li><a href="/multiqc-demo"><b class="dropdown-elements">Genome Statistics</b></a></li>
+                        <li><a href="/multiqc-demo/genome_main:glycine"><b class="dropdown-elements">Glycine Genomes</b></a></li>
+                        <li><a href="/multiqc-demo/genome_main:medicago"><b class="dropdown-elements">Medicago Genomes</b></a></li> -->
+<!--                        <li><a href="/DSCensor_neo4j_dynamic/gene_models_main"><b class="dropdown-elements">Annotation</b></a></li> -->
                       </ul>
                     </li>
                 </ul>
                 <form class="navbar-form navbar-left" id="main-nav-left">
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Search DSCensor" id="basic-search-input">
+                        <label for="type-select">Type: </label>
+                        <select class="form-control" id="type-select" name="type-select">
+                             <option value="genome_main">genome_main</option>
+                        </select>
+                        <label for="genus-select">Genus: </label>
+                        <select class="form-control" id="genus-select" name="genus-select">
+                             <option value="" selected=disabled>Genus</option>
+                        </select>
+                        <label for="species-select">Species: </label>
+                        <select class="form-control" id="species-select" name="species-select">
+                             <option value="" selected=disabled>Species</option>
+                        </select>
+<!--                      <input type="text" class="form-control" placeholder="Search DSCensor" id="basic-search-input"> -->
                     </div>
-                    <button class="btn btn-default" id="basic-search-submit"><b>Submit</b></button>
+                    <button class="btn btn-default" id="basic-search-submit"><b>Search</b></button>
                 </form>
                 <ul class="nav navbar-nav navbar-right" id="main-nav-right">
-                    <li><a href="#" onclick="alert_placeholder()"><b>Help</b></a></li>
+                    <li><a href="#" onclick="alert('Select your genus and species and hit the Search button.\n\nContact: ctc@ncgr.org for more information and bug reporting.')"><b>Help</b></a></li>
                     <li><a href="#" onclick="alert_placeholder()"><b>About</b></a></li>
-                    <li><a href="#" onclick="alert_placeholder()"><b>Links</b></a></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>Links </b><span class="caret"></span></a>
+                      <ul class="dropdown-menu scrollable-menu">
+                        <li><a href="https://www.legumefederation.org/en/"><b>Legume Federation</b></a></li>
+                        <li><a href="http://medicagohapmap2.org/"><b>Medicago HAPMAP2</b></a></li>
+                        <li><a href="https://www.nsf.gov/"><b>National Science Foundation</b></a></li>
+                      </ul>
+                    </li>
                 </ul>
             </nav>
             </div>
@@ -89,22 +147,114 @@
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+
+        const api = 'http://dev.lis.ncgr.org:50020/api/v1';
+        let query = api + '/taxa-list';
+        console.log(api, query);
+        let search_me = document.getElementById("basic-search-submit");
+        search_me.disabled = true;
+        let dropdown = document.getElementById('genus-select');
+        dropdown.length = 0;
+        const request = new XMLHttpRequest();
+        request.open('GET', query, true);
+        console.log(request);
+        request.onload = function (){
+          if(request.status == 200){
+            console.log('RETURNED 200');
+            genus = JSON.parse(request.responseText);
+            let option;
+            console.log(genus.data);
+            option = document.createElement('option');
+            option.text = 'All';
+            option.value = 'All';
+            dropdown.add(option);
+            for (let i = 0; i < genus.data.length; i++) {
+               option = document.createElement('option');
+               option.text = genus.data[i];
+               option.value = genus.data[i];
+               dropdown.add(option);
+            }
+            dropdown.selectedIndex = 0;
+            let my_genus = dropdown.options[0].text;
+            query = query + '/' + my_genus;
+            console.log(query);
+            get_species_list(query);
+          } else {
+            console.log('ERROR ON request ' + request.status);
+          }
+        };
+        request.onerror = function() {
+            console.log('SERVER RETURNED AN ERROR!')
+        };
+        request.send();
+
+        document.getElementById('genus-select').addEventListener('change', function(v){
+            console.log(this.options[v.target.selectedIndex].text);
+            let genus = this.options[v.target.selectedIndex].text;
+            let query = api + '/taxa-list/' + genus;
+            get_species_list(query);
+        });
+
         document.getElementById('basic-search-submit').addEventListener('click', function(event) {
-            var search_input = document.getElementById('basic-search-input');
-            console.log('TEST ' + search_input.value);
+            var genus_input = document.getElementById('genus-select');
+            var species_input = document.getElementById('species-select');
             /* do some formatting here */
-            if (! search_input.value){
+            if (! genus_input.value){
                 return;
             }
-            var search_me = '/file-listing/' + search_input.value;
+            let f_type = 'genome_main';
+            let listing = f_type;
+            if (genus_input.value !== 'All' && genus_input.value){
+                listing = listing + ':' + genus_input.value;
+            }
+            if (species_input.value !== 'All' && species_input.value){
+                listing = listing + ':' + species_input.value;
+            }
+            console.log(listing);
+            let search_me = '/file-listing/' + listing;
             console.log(search_me);
-            window.open(search_me);
+            window.open("/multiqc-demo/" + listing);
             event.preventDefault();
         });
     });
     function alert_placeholder(){
         alert('Coming Soon!')
     }
-</script>>
-</html>
+
+    function get_species_list(query){
+        const request = new XMLHttpRequest();
+        request.open('GET', query, true);
+        console.log(request);
+        let dropdown = document.getElementById('species-select');
+        search_me = document.getElementById("basic-search-submit");
+        search_me.disabled = true;
+        console.log(dropdown);
+        dropdown.length = 0;
+        request.onload = function (){
+          if(request.status == 200){
+            console.log('RETURNED 200');
+            let my_species = JSON.parse(request.responseText);
+            console.log(my_species);
+            option = document.createElement('option');
+            option.text = 'All';
+            option.value = 'All';
+            dropdown.add(option);
+            for (let i = 0; i < my_species.data.length; i++) {
+               option = document.createElement('option');
+               option.text = my_species.data[i];
+               option.value = my_species.data[i];
+               dropdown.add(option);
+            }
+            search_me.disabled = false;
+          } else {
+            console.log('ERROR ON request ' + request.status);
+          }
+        };
+        request.onerror = function() {
+            console.log('SERVER RETURNED AN ERROR!')
+        };
+        request.send();
+        dropdown.selectedIndex = 0;
+    }
+</script>
 </html>

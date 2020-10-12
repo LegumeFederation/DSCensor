@@ -14,10 +14,11 @@ def document_root():
     return render_template('index.html', static_path='/static')
 
 
-@app.route('/multiqc-demo')
-def multiqc_test():
+@app.route('/multiqc-demo', defaults={'query': 'genome_main'})
+@app.route('/multiqc-demo/<query>')
+def multiqc_test(query):
     my_file = str(datetime.utcnow().timestamp())
-    multiqc_cmd = f'multiqc -m busco /tmp/ -n {my_file} -c /home/ccameron/apps/DSCensor_py3/DSCensor/dscensor/client/multiqc_config.yaml -o /home/ccameron/apps/DSCensor_py3/DSCensor/dscensor/client/multiqc_results'
+    multiqc_cmd = f'multiqc -m busco /tmp/ -n {my_file} -c /home/ccameron/apps/DSCensor_py3/DSCensor/dscensor/client/multiqc_config.yaml -o /home/ccameron/apps/DSCensor_py3/DSCensor/dscensor/client/multiqc_results --ds_query "{query}"'
     check_call(multiqc_cmd, shell=True)
     return send_file(f'./client/multiqc_results/{my_file}.html')
 

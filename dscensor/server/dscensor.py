@@ -32,6 +32,7 @@ app.domain="http://dev.lis.ncgr.org:50020"
 app.panparser = panparser_prototype.main()  # get pan parser datastructures in memory
 app.main_panset = 'glysp.mixed.pan2.TV81'  # glycine main panset
 # WILL FILL HERE FOR INITIAL DATA an api view will be required here to serve it
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 msg_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 formatter = Formatter(msg_format)
