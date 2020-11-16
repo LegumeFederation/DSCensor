@@ -114,7 +114,8 @@ ul.nav > li > a > b{
                     <div class="form-group">
                         <label for="type-select">Type: </label>
                         <select class="form-control" id="type-select" name="type-select">
-                             <option value="genome_main">genome_main</option>
+                             <option value="genome_main">Genomes</option>
+                             <option value="gene_models_main">Annotations</option>
                         </select>
                         <label for="genus-select">Genus: </label>
                         <select class="form-control" id="genus-select" name="genus-select">
@@ -135,6 +136,7 @@ ul.nav > li > a > b{
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>Links </b><span class="caret"></span></a>
                       <ul class="dropdown-menu scrollable-menu">
                         <li><a href="https://www.legumefederation.org/en/"><b>Legume Federation</b></a></li>
+                        <li><a href="https://soybase.org/"><b>SoyBase</b></a></li>
                         <li><a href="http://medicagohapmap2.org/"><b>Medicago HAPMAP2</b></a></li>
                         <li><a href="https://www.nsf.gov/"><b>National Science Foundation</b></a></li>
                       </ul>
@@ -147,9 +149,10 @@ ul.nav > li > a > b{
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-
-        const api = 'http://dev.lis.ncgr.org:50020/api/v1';
-        let query = api + '/taxa-list';
+        const domain = window.location.hostname;
+        console.log(domain);
+        const api = '//' + domain + ':50020/api/v1/';
+        let query = api + 'taxa-list/';
         console.log(api, query);
         let search_me = document.getElementById("basic-search-submit");
         search_me.disabled = true;
@@ -196,13 +199,14 @@ ul.nav > li > a > b{
         });
 
         document.getElementById('basic-search-submit').addEventListener('click', function(event) {
-            var genus_input = document.getElementById('genus-select');
-            var species_input = document.getElementById('species-select');
+            const type_input = document.getElementById('type-select');
+            const genus_input = document.getElementById('genus-select');
+            const species_input = document.getElementById('species-select');
             /* do some formatting here */
             if (! genus_input.value){
                 return;
             }
-            let f_type = 'genome_main';
+            let f_type = type_input.value;
             let listing = f_type;
             if (genus_input.value !== 'All' && genus_input.value){
                 listing = listing + ':' + genus_input.value;

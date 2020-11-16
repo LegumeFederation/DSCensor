@@ -181,11 +181,18 @@ def generate_new_config():
 
 def load_config_object(obj, driver):
     msg = 'Adding new file object {}'.format(obj['filename'])
+#    statement = ('MERGE (a:{}:{}:{}:{}:{}'.format(obj['filetype'], obj['genus'],
+#                          obj['species'], obj['origin'], obj['canonical_type'])+
+#                 ' {name:{filename}, genus:{genus}, species:{species}' + 
+#                 ', url:{url}, filetype:{filetype}, origin:{origin}' +
+#                 ', canonical_type:{canonical_type}')
     statement = ('MERGE (a:{}:{}:{}:{}:{}'.format(obj['filetype'], obj['genus'],
                           obj['species'], obj['origin'], obj['canonical_type'])+
-                 ' {name:{filename}, genus:{genus}, species:{species}' + 
+                 ' {name:{filename}})' + 
+                 ' SET a = {name:{filename}, genus:{genus}, species:{species}' + 
                  ', url:{url}, filetype:{filetype}, origin:{origin}' +
                  ', canonical_type:{canonical_type}')
+
 #    if obj.get('counts', None):
 #        statement += ', counts:{path}'
 #        if obj['filetype'] == 'fasta' or obj['filetype'] == 'assembly':
@@ -209,7 +216,7 @@ def load_config_object(obj, driver):
     for f in obj.get('busco', {}):
         obj[f] = obj['busco'][f]
         statement += ', {0}:{{{0}}}'.format(f)
-    statement += '}) RETURN a.name, labels(a)'
+    statement += '} RETURN a.name, labels(a)'
     with driver.session() as session:
         for r in session.run(statement, obj):
             name = r['a.name']

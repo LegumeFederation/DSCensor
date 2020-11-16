@@ -10,9 +10,9 @@
 #  3. <working directory>/multiqc_config.yaml
 #################################################################
 
-title: "DSCensor Genome Main Overview"
+title: "DSCensor"
 subtitle: null
-intro_text: "Statistics and BUSCOs for Legume Federation Genomes"
+intro_text: "Statistics and BUSCOs for the Legume Federation Datastore"
 report_comment: null
 report_header_info: null
 config_file: null
