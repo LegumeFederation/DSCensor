@@ -13,7 +13,7 @@ gunicorn==19.7.1
 humanfriendly==8.2
 idna==2.9
 itsdangerous==0.24
-Jinja2==2.10.1
+Jinja2==2.11.3
 kiwisolver==1.2.0
 lzstring==1.0.4
 Markdown==3.2.1
