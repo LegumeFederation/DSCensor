@@ -25,7 +25,7 @@ networkx==2.4
 numpy==1.18.3
 pyparsing==2.4.7
 python-dateutil==2.7.2
-PyYAML==5.3.1
+PyYAML==5.4
 requests==2.23.0
 simplejson==3.13.2
 six==1.11.0
